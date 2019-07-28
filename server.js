@@ -12,6 +12,7 @@ const strip = (r) => {
   delete r.rank_value
   delete r.result_modified
   delete r.result_detail1
+  delete r.result_detail2
   delete r.result_detail5
   delete r.result_detail6
   delete r.result_detail7
