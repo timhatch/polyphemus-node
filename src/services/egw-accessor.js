@@ -10,10 +10,10 @@ axiosCancel(axios, { debug: false })
 
 // Default URL
 // NOTE: eGroupware test system URL
-const _url = 'https://digitalrock.egroupware.de/egw/ranking/json.php'
+// const _url = 'https://digitalrock.egroupware.de/egw/ranking/json.php'
 // NOTE: Default URL and undocumented HTTPS URL
 // const _url = 'http://egw.ifsc-climbing.org/egw/ranking/json.php'
-// const _url = 'https://ifsc-egw.wavecdn.net/egw/ranking/json.php'
+const _url = 'https://ifsc-egw.wavecdn.net/egw/ranking/json.php'
 const _alt = 'https://ifsc.austriaclimbing.com/ch-combined'
 // NOTE: Austria Climbing proxy
 // const _url = 'https://www.innsbruck2018.com/ifsc/json.php'
