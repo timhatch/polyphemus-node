@@ -14,7 +14,7 @@ axiosCancel(axios, { debug: false })
 // NOTE: Default URL and undocumented HTTPS URL
 // const _url = 'http://egw.ifsc-climbing.org/egw/ranking/json.php'
 const _url = 'https://ifsc-egw.wavecdn.net/egw/ranking/json.php'
-const _alt = 'https://ifsc.austriaclimbing.com/ch-combined'
+
 // NOTE: Austria Climbing proxy
 // const _url = 'https://www.innsbruck2018.com/ifsc/json.php'
 
@@ -51,33 +51,6 @@ class EGroupwareHTTPService {
   static gender     (grpid) { return isMaleCategory(grpid) }
   static ages       (grpid) { return findAgeGroup(grpid) }
 
-  // Fetch the IFSC calendar
-  static async fetchCalendar(query) {
-    try {
-      const data_url = `${_alt}/${query}.json` 
-      const response = await axios.get(data_url, {
-        timeout: 7500,
-        requestId: JSON.stringify(query)
-      })
-      return response.data
-    } catch (e) {
-      return null
-    }
-  }
-
-  // Fetch the result list for a specific comp/category/route combination
-  // @params = comp (WetId), cat (GrpId) and route (route)
-  static async fetchRanking(query) {
-    try {
-      const response    = await fetch(query)
-      const results     = { ranking: fromEntries(response.data.participants.map(per_id)) }
-      const route_names = response.data.route_names 
-      return { results, route_names }
-    } catch (e) {
-      return axios.isCancel(e) ? { cancel: true } : null
-    }
-  }
-
   // Fetch the result list for a specific comp/category/route combination
   // @params = comp (WetId), cat (GrpId) and route (route)
   static async fetchResults(query) {
@@ -104,17 +77,6 @@ class EGroupwareHTTPService {
     }
   }
 
-  // Fetch a career history
-  // Expects a single query parameter { person: int }
-  static async fetchPerson(query) {
-    try {
-      const response = await fetch(query)
-      return response.data.results
-    } catch (e) {
-      return null
-    }
-  }
-  
   // Cancel any pending requests
   // NOTE: Because fetchStarters is queued to be fired after all fetchResults
   // requests have been resolved, axios-cancel may or may not fire on the fetchStarters

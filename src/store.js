@@ -1,9 +1,4 @@
 import { isObject }  from './services/utilities'
-// Set up a Store class
-// @params
-//  - httpservice (class)     The api class that the store will use to access results/calendar 
-//                            data
-
 
 const parseRoute = (r) => !!r && parseInt(r) > 0 ? [-1, -3] : [0, -1, -3]
 
