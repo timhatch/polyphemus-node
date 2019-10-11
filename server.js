@@ -1,4 +1,5 @@
 import express      from 'express'
+import jsonxml      from 'jsontoxml'
 
 import Store        from './src/store'
 import HTTPService  from './src/services/egw-accessor'
@@ -21,10 +22,17 @@ const strip = (r) => {
   return r
 }
 
-async function fetch(store, response) {
+async function fetchJSON(store, response) {
   let results = await store.fetchResults()
   let data    = reducer(store)().map(strip)
   response.send(JSON.stringify(data))
+}
+
+async function fetchXML(store, response) {
+  let results = await store.fetchResults()
+  let data    = reducer(store)().map(strip)
+  let json    = { 'results' : data.map((x) => ({ person: x })) }
+  response.send(jsonxml(json, {prettyPrint: true, xmlHeader: true }))
 }
 
 const store = new Store(HTTPService)
@@ -36,7 +44,12 @@ const port = process.env.PORT || 3000
 
 app.get('/results', (req, res) => {
   store.setRequestParams(req.query)
-  fetch(store, res)
+  fetchJSON(store, res)
+})
+
+app.get('/xml', (req, res) => {
+  store.setRequestParams(req.query)
+  fetchXML(store, res)
 })
 
 app.use(function (req, res, next) {
